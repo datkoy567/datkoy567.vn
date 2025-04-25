@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <h1 class="title"DATKOY567 </h1>
+      <p id="currentTime"></p>
+      <script src="script.js"></script>
+  </body>
+</html><!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bio Profile with Music and Copy Link</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #6e7f91, #28393d); /* Background gradient */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      overflow-x: hidden;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 100%;
+    }
+    .scrolling-list {
+      max-height: 150px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+    .scrolling-list li {
+      padding: 8px;
+      background: #fff;
+      margin: 5px 0;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .tick-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #fff; /* Thêm đường viền trắng */
+      background-color: #1e7dff;
+      display: inline-block;
+      position: relative;
+      margin-left: 8px;
+      transition: transform 0.2s ease;
+    }
+    .tick-icon::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 6px;
+      width: 6px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+    }
+    .btn-follow {
+      background-color: #1e7dff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .btn-follow:hover {
+      background-color: #155fdb;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+    .btn-copy {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .btn-copy:hover {
+      background-color: #45a049;
+    }
+    .falling-roses {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      width: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .falling-roses img {
+      width: 20px;
+      height: 20px;
+      animation: fall 5s linear infinite;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px);
+      }
+      100% {
+        transform: translateY(100vh);
+      }
+    }
+    .cat-animation {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      animation: catMove 6s infinite linear;
+    }
+    @keyframes catMove {
+      0% {
+        left: -200px;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      color: #fff;
+      font-style: italic;
+    }
+    /* Đồng hồ với hiệu ứng phát sáng */
+    .clock {
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+      margin-top: 20px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5); /* Hiệu ứng phát sáng */
+    }
+  </style>
+</head>
+<body class="p-8">
+  <!-- Con mèo chạy qua lại -->
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHY3N2Rvc2I3cmVjMm1xdTZiZDhpc2VwY3B4a2x4c3JwcXhtNjlsdiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/kBuMyaqdTIofe/giphy.gif" alt="Cat Animation" class="cat-animation">
+
+  <!-- Hiệu ứng hoa hồng rơi -->
+  <div class="falling-roses">
+    <img src="https://i.imgur.com/p5ic9aT.png" alt="Rose" class="falling-item">
+    <img src="https://i.imgur.com/p5ic9aT.png" alt="Rose" class="falling-item">
+    <img src="https://i.imgur.com/p5ic9aT.png" alt="Rose" class="falling-item">
+  </div>
+
+  <div class="flex flex-col items-center">
+    <div class="glass w-full max-w-md text-center">
+      <!-- Avatar -->
+      <img src="https://i.imgur.com/ura75Oo.png" alt="Avatar" class="avatar mx-auto">
+      
+      <!-- Tên người dùng với nút tick xanh -->
+      <div class="flex items-center justify-center text-3xl font-bold mt-4">
+        <span>Đình Đạt</span>
+        <div class="tick-icon"></div> <!-- Nút tick xanh giống Facebook -->
+      </div>
+      
+      <!-- Mô tả -->
+      <p class="text-lg text-gray-700 mt-4">CÔNG VIỆC INBOX ZALO: 0567355553.</p>
+      
+      <!-- Lượt xem hồ sơ hôm nay -->
+      <div class="mt-4 text-lg text-gray-700">
+        <strong>Lượt xem hồ sơ hôm nay:</strong>
+        <span id="view-counter" class="text-blue-600">1,234</span>
+      </div>
+      
+      <!-- Danh sách người theo dõi -->
+      <div class="mt-6">
+        <h3 class="text-xl font-semibold text-blue-600">Người theo dõi:</h3>
+        <ul class="scrolling-list">
+          <li>Nguyễn Văn A</li>
+          <li>Trần Thị B</li>
+          <li>Lê Văn C</li>
+          <li>Hoàng Thị D</li>
+          <li>Phạm Văn E</li>
+          <li>Vũ Thị F</li>
+        </ul>
+      </div>
+
+      <!-- Nút theo dõi và sao chép liên kết -->
+      <div class="mt-6 flex justify-center space-x-4">
+        <button class="btn-follow" onclick="toggleFollow()">Theo dõi</button>
+        <button class="btn-copy" onclick="copyLink()">Sao chép liên kết</button>
+      </div>
+
+      <!-- Nhúng âm nhạc từ YouTube -->
+      <div class="mt-6">
+        <h3 class="text-xl font-semibold text-blue-600">Âm nhạc:</h3>
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/2Vv-D-RaFaHOg-w=1&mute=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <p class="mt-4 text-lg text-gray-700">Bạn có thể thay đổi liên kết YouTube ở trên.</p>
+      </div>
+      
+      <!-- Đồng hồ thời gian chuẩn giờ Việt Nam -->
+      <div class="clock" id="clock"></div>
+
+    </div>
+  </div>
+
+  <!-- Phần bản quyền -->
+  <div class="copyright">
+    <p>&copy; <span id="year"></span> datkoy567. All rights reserved.</p>
+  </div>
+
+  <script>
+    // Giả lập việc cập nhật lượt xem hồ sơ
+    let viewCount = 1234;
+    const viewCounter = document.getElementById('view-counter');
+
+    setInterval(() => {
+      viewCount++;
+      viewCounter.textContent = viewCount.toLocaleString();
+    }, 1000);  // Mỗi giây lượt xem hồ sơ sẽ tăng lên
+
+    // Cuộn tự động danh sách người theo dõi
+    const scrollingList = document.querySelector('.scrolling-list');
+    setInterval(() => {
+      const firstItem = scrollingList.firstElementChild;
+      scrollingList.appendChild(firstItem);
+    }, 2000);  // Mỗi 2 giây, phần tử đầu tiên sẽ di chuyển xuống cuối danh sách
+
+    // Toggle trạng thái theo dõi
+    function toggleFollow() {
+      const followButton = document.querySelector('.btn-follow');
+      if (followButton.textContent === 'Theo dõi') {
+        followButton.textContent = 'Đã theo dõi';
+        followButton.style.backgroundColor = '#1E7DFF';  // Màu xanh dương
+      } else {
+        followButton.textContent = 'Theo dõi';
+        followButton.style.backgroundColor = '#4CAF50';  // Màu xanh lá
+      }
+    }
+
+    // Sao chép liên kết
+    function copyLink() {
+      const url = window.location.href;  // Lấy URL hiện tại
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Liên kết đã được sao chép!');
+      }).catch((error) => {
+        alert('Lỗi sao chép liên kết: ' + error);
+      });
+    }
+
+    // Thêm năm hiện tại vào phần bản quyền
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Hàm hiển thị đồng hồ thời gian chuẩn giờ Việt Nam
+    function updateClock() {
+      const now = new Date();
+      const options = { timeZone: 'Asia/Ho_Chi_Minh', hour12: false };
+      const timeString = now.toLocaleTimeString('vi-VN', options);
+      document.getElementById('clock').textContent = `Thời gian hiện tại: ${timeString}`;
+    }
+
+    setInterval(updateClock, 1000);  // Cập nhật mỗi giây
+    updateClock();  // Khởi tạo đồng hồ ngay khi trang tải
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Music</title>
+  <style>
+    body {
+      background-color: #1d1f20;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+    #snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      font-size: 20px;
+      opacity: 0.8;
+      user-select: none;
+      pointer-events: none;
+      animation: snow 10s linear infinite;
+    }
+    @keyframes snow {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+    #music-player {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 999;
+    }
+    #music-player iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 15px;
+    }
+    #music-info {
+      margin-top: 10px;
+      font-size: 18px;
+      color: yellow;
+    }
+    #countdown {
+      font-size: 24px;
+      margin-top: 10px;
+      color: #ff6666;
+      text-shadow: 0px 0px 10px #ff0000;
+    }
+  </style>
+</head>
+<body>
+<htlm><!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Music</title>
+  <style>
+    body {
+      background-color: #1d1f20;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+    #snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      font-size: 20px;
+      opacity: 0.8;
+      user-select: none;
+      pointer-events: none;
+      animation: snow 10s linear infinite;
+    }
+    @keyframes snow {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+    #music-player {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 999;
+    }
+    #music-player iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 15px;
+    }
+    #music-info {
+      margin-top: 10px;
+      font-size: 18px;
+      color: yellow;
+    }
+    #countdown {
+      font-size: 24px;
+      margin-top: 10px;
+      color: #ff6666;
+      text-shadow: 0px 0px 10px #ff0000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tuyết rơi -->
+  <div id="snow"></div>
+
+  <!-- Đĩa nhạc -->
+  <div id="music-player">
+    <iframe id="music-iframe" src="
+    <div id="music-info"</div>
+    <div id="countdown"
+  </div>
+
+  <script>
+    // Hiệu ứng tuyết rơi
+    function createSnowflakes() {
+      const snowContainer = document.getElementById("snow");
+      const snowflakeCount = 100;
+      for (let i = 0; i < snowflakeCount; i++) {
+        let snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+        snowflake.textContent = "❄";
+        snowflake.style.left = Math.random() * 100 + "vw";
+        snowflake.style.animationDuration = Math.random() * 5 + 5 + "s"; // Thời gian rơi ngẫu nhiên
+        snowflake.style.fontSize = Math.random() * 10 + 15 + "px"; // Kích thước tuyết ngẫu nhiên
+        snowContainer.appendChild(snowflake);
+      }
+    }
+    createSnowflakes();
+
+    // Đếm ngược thời gian bài hát
+    function countdown() {
+      const songDuration = 213; // Thời gian của bài hát (ví dụ: 3 phút 33 giây = 213 giây)
+      let remainingTime = songDuration;
+      const countdownElement = document.getElementById("countdown");
+
+      function updateCountdown() {
+        remainingTime--;
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        countdownElement.textContent = `Thời gian còn lại: ${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        if (remainingTime <= 0) {
+          clearInterval(countdownInterval);
+        }
+      }
+
+      const countdownInterval = setInterval(updateCountdown, 1000);
+    }
+    countdown();
+
+    // Chức năng thay đổi bài hát
+    function changeSong(videoId, songName) {
+      const iframe = document.getElementById("music-iframe");
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
+      const musicInfo = document.getElementById("music-info");
+      musicInfo.textContent = `Nhạc đang phát: "${songName}"`;
+    }
+
+    // Bạn có thể gọi `changeSong(videoId, songName)` để thay đổi bài hát.
+    // Ví dụ:
+    // changeSong('dQw4w9WgXcQ', 'Never Gonna Give You Up');
+  </script>
+
+</body>
+</html>
